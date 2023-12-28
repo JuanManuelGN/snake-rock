@@ -1,5 +1,6 @@
 package snake
 
+import javafx.scene.input.{KeyCode, KeyEvent}
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.beans.property.{IntegerProperty, ObjectProperty}
 import scalafx.scene.Scene
@@ -13,8 +14,8 @@ import scala.util.Random
 object SnakeFx extends JFXApp3 {
 
   object Word {
-    val width = 800
-    val height = 800
+    val width = 1000
+    val height = 1000
   }
 
   val initialSnake: List[(Double, Double)] = List(
@@ -88,13 +89,21 @@ object SnakeFx extends JFXApp3 {
       scene = new Scene {
         fill = White
         content = state.value.rectangles
-        onKeyPressed = key => key.getText match {
-          case "w" => direction.value = 1
-          case "s" => direction.value = 4
-          case "a" => direction.value = 3
-          case "z" => direction.value = 2
-          case _ => direction.value = direction.value
+        onKeyPressed = (ke: KeyEvent) => {
+          ke.getCode match {
+            case KeyCode.UP => direction.value = 1
+            case KeyCode.RIGHT => direction.value = 4
+            case KeyCode.LEFT => direction.value = 3
+            case KeyCode.DOWN => direction.value = 2
+          }
         }
+//        onKeyPressed = key => key.getText match {
+//          case "w" => direction.value = 1
+//          case "s" => direction.value = 4
+//          case "a" => direction.value = 3
+//          case "z" => direction.value = 2
+//          case _ => direction.value = direction.value
+//        }
 
         frame.onChange {
           Platform.runLater {
